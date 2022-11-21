@@ -47,11 +47,11 @@ export default function Home(props) {
       }
 
       if (filterSort === 'Min Price') {
-        computedItems.sort(
+        computedItems = [...computedItems].sort(
           (a, b) => a.topOffers[0].price - b.topOffers[0].price
         );
       } else if (filterSort === 'Max Price') {
-        computedItems.sort(
+        computedItems = [...computedItems].sort(
           (a, b) => b.topOffers[0].price - a.topOffers[0].price
         );
       }
