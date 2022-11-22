@@ -257,7 +257,7 @@ export default function Home(props) {
             </div>
           </div>
           <div className='col-8'>
-            <div className='d-flex flex-wrap justify-content-between'>
+            <div className='d-flex flex-wrap justify-content-start'>
               {itemsData.length > 0 ? (
                 itemsData.map((product) => {
                   return (
