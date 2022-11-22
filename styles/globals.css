@@ -7,12 +7,3 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f1f5f8;
 }
-
-.container {
-  margin: 0px auto;
-  position: relative;
-  min-width: 960px;
-  max-width: 1200px;
-  padding-left: 15px;
-  padding-right: 15px;
-}

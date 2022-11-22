@@ -137,38 +137,40 @@ export default function Home(props) {
       <div className='container mt-4'>
         <div className='row'>
           <div className='col-4'>
-            {merchantFilter.length > 0
-              ? merchantFilter.map((filter, i) => {
-                  return (
-                    <div key={i}>
-                      <button
-                        className='btn btn-primary m-2'
-                        onClick={(e) => {
-                          handleMerchantBtn(e);
-                        }}
-                      >
-                        {filter}
-                      </button>
-                    </div>
-                  );
-                })
-              : null}
-            {brandFilter.length > 0
-              ? brandFilter.map((filter, i) => {
-                  return (
-                    <div key={i}>
-                      <button
-                        className='btn btn-secondary m-2'
-                        onClick={(e) => {
-                          handleBrandBtn(e);
-                        }}
-                      >
-                        {filter}
-                      </button>
-                    </div>
-                  );
-                })
-              : null}
+            <div class='d-flex flex-row flex-nowrap overflow-scroll w-75 mb-3'>
+              {merchantFilter.length > 0
+                ? merchantFilter.map((filter, i) => {
+                    return (
+                      <div key={i}>
+                        <button
+                          className='btn btn-primary m-2'
+                          onClick={(e) => {
+                            handleMerchantBtn(e);
+                          }}
+                        >
+                          {filter}
+                        </button>
+                      </div>
+                    );
+                  })
+                : null}
+              {brandFilter.length > 0
+                ? brandFilter.map((filter, i) => {
+                    return (
+                      <div key={i}>
+                        <button
+                          className='btn btn-secondary m-2'
+                          onClick={(e) => {
+                            handleBrandBtn(e);
+                          }}
+                        >
+                          {filter}
+                        </button>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
             <div>
               <div className='mb-3'>
                 <input
@@ -256,19 +258,23 @@ export default function Home(props) {
           </div>
           <div className='col-8'>
             <div className='d-flex flex-wrap justify-content-between'>
-              {itemsData.map((product) => {
-                return (
-                  <ProductCard
-                    title={product.title}
-                    image={product.imageUrl}
-                    topofferprice={product.topOffers[0].price}
-                    topsecondofferprice={product.topOffers[1].price}
-                    topoffer={product.topOffers[0].merchant.name}
-                    topsecondoffer={product.topOffers[1].merchant.name}
-                    key={product.id}
-                  ></ProductCard>
-                );
-              })}
+              {itemsData.length > 0 ? (
+                itemsData.map((product) => {
+                  return (
+                    <ProductCard
+                      title={product.title}
+                      image={product.imageUrl}
+                      topofferprice={product.topOffers[0].price}
+                      topsecondofferprice={product.topOffers[1].price}
+                      topoffer={product.topOffers[0].merchant.name}
+                      topsecondoffer={product.topOffers[1].merchant.name}
+                      key={product.id}
+                    ></ProductCard>
+                  );
+                })
+              ) : (
+                <h2>Ürün Bulunamadı</h2>
+              )}
             </div>
           </div>
         </div>
