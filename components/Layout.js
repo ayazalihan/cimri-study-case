@@ -7,9 +7,6 @@ function Layout({ children, title }) {
       <Head>
         <title>{title ? title + ' - Study Case' : 'Study Case'}</title>
       </Head>
-      <nav className='d-flex justify-content-center'>
-        <h1>Study Case</h1>
-      </nav>
       <div>
         <main>{children}</main>
       </div>

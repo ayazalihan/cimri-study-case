@@ -11,6 +11,8 @@ export default function Home(props) {
   const [merchantFilter, setMerchantFilter] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
   const [filterSort, setFilterSort] = useState('');
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
@@ -22,49 +24,63 @@ export default function Home(props) {
     pageNumbers.push(i);
   }
 
-  const itemsData = useMemo(
-    (e) => {
-      let computedItems = items;
+  const itemsData = useMemo(() => {
+    let computedItems = items;
 
-      if (searchTerm) {
-        computedItems = computedItems.filter(
-          (item) =>
-            item.title.toLowerCase().includes(searchTerm.toLowerCase()) +
-            item.brand.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
-
-      if (merchantFilter.length > 0) {
-        computedItems = computedItems.filter((item) =>
-          merchantFilter.includes(item.topOffers[0].merchant.name)
-        );
-      }
-
-      if (brandFilter.length > 0) {
-        computedItems = computedItems.filter((item) =>
-          brandFilter.includes(item.brand.name)
-        );
-      }
-
-      if (filterSort === 'Min Price') {
-        computedItems = [...computedItems].sort(
-          (a, b) => a.topOffers[0].price - b.topOffers[0].price
-        );
-      } else if (filterSort === 'Max Price') {
-        computedItems = [...computedItems].sort(
-          (a, b) => b.topOffers[0].price - a.topOffers[0].price
-        );
-      }
-
-      setTotalItems(computedItems.length);
-
-      return computedItems.slice(
-        (currentPage - 1) * itemsPerPage,
-        (currentPage - 1) * itemsPerPage + itemsPerPage
+    if (searchTerm) {
+      computedItems = computedItems.filter(
+        (item) =>
+          item.title.toLowerCase().includes(searchTerm.toLowerCase()) +
+          item.brand.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    },
-    [items, currentPage, searchTerm, merchantFilter, brandFilter, filterSort]
-  );
+    }
+
+    if (merchantFilter.length > 0) {
+      computedItems = computedItems.filter((item) =>
+        merchantFilter.includes(item.topOffers[0].merchant.name)
+      );
+    }
+
+    if (brandFilter.length > 0) {
+      computedItems = computedItems.filter((item) =>
+        brandFilter.includes(item.brand.name)
+      );
+    }
+
+    if (filterSort === 'Min Price') {
+      computedItems = [...computedItems].sort(
+        (a, b) => a.topOffers[0].price - b.topOffers[0].price
+      );
+    } else if (filterSort === 'Max Price') {
+      computedItems = [...computedItems].sort(
+        (a, b) => b.topOffers[0].price - a.topOffers[0].price
+      );
+    }
+
+    if (maxPrice > minPrice) {
+      computedItems = computedItems.filter(
+        (item) =>
+          item.topOffers[0].price < maxPrice &&
+          item.topOffers[0].price > minPrice
+      );
+    }
+
+    setTotalItems(computedItems.length);
+
+    return computedItems.slice(
+      (currentPage - 1) * itemsPerPage,
+      (currentPage - 1) * itemsPerPage + itemsPerPage
+    );
+  }, [
+    items,
+    currentPage,
+    searchTerm,
+    merchantFilter,
+    brandFilter,
+    filterSort,
+    maxPrice,
+    minPrice,
+  ]);
 
   const handleMerchantFilter = (e) => {
     if (e.target.checked) {
@@ -134,58 +150,27 @@ export default function Home(props) {
 
   return (
     <Layout>
-      <div className='container mt-4'>
+      <div className='container py-3'>
+        <nav className='row border-bottom my-3'>
+          <h2 className='col-4'>Cimri Study Case</h2>
+          <div className='col-8'>
+            <input
+              type='text'
+              className='form-control w-75'
+              id='search'
+              placeholder='Marka veya Ürün Ara'
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
+        </nav>
         <div className='row'>
           <div className='col-4'>
-            <div class='d-flex flex-row flex-nowrap overflow-scroll w-75 mb-3'>
-              {merchantFilter.length > 0
-                ? merchantFilter.map((filter, i) => {
-                    return (
-                      <div key={i}>
-                        <button
-                          className='btn btn-primary m-2'
-                          onClick={(e) => {
-                            handleMerchantBtn(e);
-                          }}
-                        >
-                          {filter}
-                        </button>
-                      </div>
-                    );
-                  })
-                : null}
-              {brandFilter.length > 0
-                ? brandFilter.map((filter, i) => {
-                    return (
-                      <div key={i}>
-                        <button
-                          className='btn btn-secondary m-2'
-                          onClick={(e) => {
-                            handleBrandBtn(e);
-                          }}
-                        >
-                          {filter}
-                        </button>
-                      </div>
-                    );
-                  })
-                : null}
-            </div>
             <div>
-              <div className='mb-3'>
-                <input
-                  type='text'
-                  className='form-control w-75'
-                  id='search'
-                  placeholder='Marka veya Ürün Ara'
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                />
-              </div>
-              <div className='mb-3'>
+              <div className='my-3'>
                 <label htmlFor='search' className='form-label'>
                   Satıcı Filtresi
                 </label>
@@ -246,6 +231,28 @@ export default function Home(props) {
                 </select>
               </div>
               <div className='my-3'>
+                <label className='form-label'>Fiyat Aralığı</label>
+                <input
+                  type='number'
+                  min='0'
+                  className='form-control
+                  w-50
+                  my-2
+                  '
+                  onChange={(e) => {
+                    setMinPrice(e.target.value);
+                  }}
+                ></input>
+                <input
+                  type='number'
+                  min='0'
+                  className='form-control w-50 my-2'
+                  onChange={(e) => {
+                    setMaxPrice(e.target.value);
+                  }}
+                ></input>
+              </div>
+              <div className='my-3'>
                 <button
                   type='button'
                   className='btn btn-danger btn-sm'
@@ -257,6 +264,40 @@ export default function Home(props) {
             </div>
           </div>
           <div className='col-8'>
+            <div className='d-flex flex-row flex-nowrap overflow-scroll w-75'>
+              {merchantFilter.length > 0
+                ? merchantFilter.map((filter, i) => {
+                    return (
+                      <div key={i}>
+                        <button
+                          className='btn btn-primary m-2'
+                          onClick={(e) => {
+                            handleMerchantBtn(e);
+                          }}
+                        >
+                          {filter}
+                        </button>
+                      </div>
+                    );
+                  })
+                : null}
+              {brandFilter.length > 0
+                ? brandFilter.map((filter, i) => {
+                    return (
+                      <div key={i}>
+                        <button
+                          className='btn btn-secondary m-2'
+                          onClick={(e) => {
+                            handleBrandBtn(e);
+                          }}
+                        >
+                          {filter}
+                        </button>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
             <div className='d-flex flex-wrap justify-content-start'>
               {itemsData.length > 0 ? (
                 itemsData.map((product) => {
