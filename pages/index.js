@@ -188,6 +188,7 @@ export default function Home(props) {
                           type='checkbox'
                           value={merchant}
                           className='form-check-input'
+                          checked={merchantFilter.includes(`${merchant}`)}
                         />
                         <label className='px-2'>{merchant}</label>
                       </li>
@@ -211,6 +212,7 @@ export default function Home(props) {
                           type='checkbox'
                           value={brand}
                           className='form-check-input'
+                          checked={brandFilter.includes(`${brand}`)}
                         />
                         <label className='px-2'>{brand}</label>
                       </li>
