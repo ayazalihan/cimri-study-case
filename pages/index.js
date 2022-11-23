@@ -330,14 +330,16 @@ export default function Home(props) {
       <nav className='d-flex justify-content-center'>
         <ul className='pagination'>
           <li>
-            <button
-              onClick={() =>
-                currentPage !== 1 ? paginate(currentPage - 1) : null
-              }
-              className='page-link'
-            >
-              {'Önceki'}
-            </button>
+            {pageNumbers.length > 0 ? (
+              <button
+                onClick={() =>
+                  currentPage !== 1 ? paginate(currentPage - 1) : null
+                }
+                className='page-link'
+              >
+                {'Önceki'}
+              </button>
+            ) : null}
           </li>
           {pageNumbers.map((number) => (
             <li key={number} className='page-item'>
@@ -347,16 +349,18 @@ export default function Home(props) {
             </li>
           ))}
           <li>
-            <button
-              onClick={() =>
-                currentPage !== pageNumbers.length
-                  ? paginate(currentPage + 1)
-                  : null
-              }
-              className='page-link'
-            >
-              {'Sonraki'}
-            </button>
+            {pageNumbers.length > 0 ? (
+              <button
+                onClick={() =>
+                  currentPage !== pageNumbers.length
+                    ? paginate(currentPage + 1)
+                    : null
+                }
+                className='page-link'
+              >
+                {'Sonraki'}
+              </button>
+            ) : null}
           </li>
         </ul>
       </nav>
