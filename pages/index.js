@@ -134,6 +134,8 @@ export default function Home(props) {
     setBrandFilter([]);
     setCurrentPage(1);
     setFilterSort('');
+    setMinPrice(0);
+    setMaxPrice(0);
   };
 
   let merchantArray = products.map(function (item) {
@@ -239,6 +241,8 @@ export default function Home(props) {
                   w-50
                   my-2
                   '
+                  value={minPrice}
+                  placeholder='10'
                   onChange={(e) => {
                     setMinPrice(e.target.value);
                   }}
@@ -247,6 +251,7 @@ export default function Home(props) {
                   type='number'
                   min='0'
                   className='form-control w-50 my-2'
+                  value={maxPrice}
                   onChange={(e) => {
                     setMaxPrice(e.target.value);
                   }}
