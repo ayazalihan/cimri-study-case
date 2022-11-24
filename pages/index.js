@@ -154,8 +154,8 @@ export default function Home(props) {
     <Layout>
       <div className='container py-3'>
         <nav className='row border-bottom my-3'>
-          <h2 className='col-4'>Cimri Study Case</h2>
-          <div className='col-8'>
+          <h2 className='col-md-4'>Cimri Study Case</h2>
+          <div className='col-md-8'>
             <input
               type='text'
               className='form-control w-75'
@@ -170,7 +170,7 @@ export default function Home(props) {
           </div>
         </nav>
         <div className='row'>
-          <div className='col-4'>
+          <div className='col-md-4'>
             <div>
               <div className='my-3'>
                 <label htmlFor='search' className='form-label'>
@@ -270,7 +270,7 @@ export default function Home(props) {
               </div>
             </div>
           </div>
-          <div className='col-8'>
+          <div className='col-md-8'>
             <div className='d-flex flex-row flex-nowrap overflow-scroll w-75'>
               {merchantFilter.length > 0
                 ? merchantFilter.map((filter, i) => {

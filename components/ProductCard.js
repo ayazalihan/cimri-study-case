@@ -12,6 +12,9 @@ const Wrapper = styled.div`
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
   }
+  @media (max-width: 600px) {
+    max-width: 180px;
+  }
 `;
 
 const Link = styled.a`
