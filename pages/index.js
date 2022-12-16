@@ -35,13 +35,13 @@ export default function Home(props) {
       );
     }
 
-    if (merchantFilter.length > 0) {
+    if (merchantFilter.length) {
       computedItems = computedItems.filter((item) =>
         merchantFilter.includes(item.topOffers[0].merchant.name)
       );
     }
 
-    if (brandFilter.length > 0) {
+    if (brandFilter.length) {
       computedItems = computedItems.filter((item) =>
         brandFilter.includes(item.brand.name)
       );
@@ -272,7 +272,7 @@ export default function Home(props) {
           </div>
           <div className='col-md-8'>
             <div className='d-flex flex-row flex-nowrap overflow-scroll w-75'>
-              {merchantFilter.length > 0
+              {merchantFilter.length
                 ? merchantFilter.map((filter, i) => {
                     return (
                       <div key={i}>
@@ -288,7 +288,7 @@ export default function Home(props) {
                     );
                   })
                 : null}
-              {brandFilter.length > 0
+              {brandFilter.length
                 ? brandFilter.map((filter, i) => {
                     return (
                       <div key={i}>
@@ -306,7 +306,7 @@ export default function Home(props) {
                 : null}
             </div>
             <div className='d-flex flex-wrap justify-content-start'>
-              {itemsData.length > 0 ? (
+              {itemsData.length ? (
                 itemsData.map((product) => {
                   return (
                     <ProductCard
@@ -330,7 +330,7 @@ export default function Home(props) {
       <nav className='d-flex justify-content-center'>
         <ul className='pagination'>
           <li>
-            {pageNumbers.length > 0 ? (
+            {pageNumbers.length ? (
               <button
                 onClick={() =>
                   currentPage !== 1 ? paginate(currentPage - 1) : null
@@ -349,7 +349,7 @@ export default function Home(props) {
             </li>
           ))}
           <li>
-            {pageNumbers.length > 0 ? (
+            {pageNumbers.length ? (
               <button
                 onClick={() =>
                   currentPage !== pageNumbers.length
