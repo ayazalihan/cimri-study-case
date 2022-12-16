@@ -57,7 +57,7 @@ export default function Home(props) {
       );
     }
 
-    if (maxPrice > minPrice) {
+    if (minPrice && maxPrice) {
       computedItems = computedItems.filter(
         (item) =>
           item.topOffers[0].price < maxPrice &&
